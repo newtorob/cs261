@@ -33,6 +33,7 @@ void sticky(char* word){
 }
 
 int main(){
+    
     char word[30];
     printf("Enter word (30 chars or less):\n");
     /*Read word from the keyboard using scanf*/
