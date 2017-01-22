@@ -25,7 +25,9 @@ void generate(struct student* students){
 }
 
 void output(struct student* students){
-     /*Output information about the ten students in the format:
+    printf("the value inside fooA is %x", *iptr);
+     /*Print the address pointed to by iptr*/
+       /*Output information about the ten students in the format:
               ID1 Score1
               ID2 score2
               ID3 score3
@@ -46,14 +48,14 @@ int main(){
     struct student* stud = NULL;
     
     /*call allocate*/
-    
+    summary();
     /*call generate*/
-    
+    deallocate();
     /*call output*/
-    
+    output();
     /*call summary*/
-    
+    summary();
     /*call deallocate*/
-
+    deallocate();
     return 0;
 }
