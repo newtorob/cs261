@@ -1,6 +1,6 @@
 /* CS261- Assignment 1 - Q.4*/
-/* Name:
- * Date:
+/* Name: Robert Newton
+ * Date: 01-22-2017
  * Solution description:
  */
  
@@ -45,7 +45,7 @@ void generate(struct student* students, int n)
     {
         ids[i] = i + 1;
     }
-    
+
     for (int i = 0; i < n; i ++)
     {
         int index = rand() % n;

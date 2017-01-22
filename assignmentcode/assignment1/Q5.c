@@ -1,6 +1,6 @@
 /* CS261- Assignment 1 - Q.5*/
-/* Name:
- * Date:
+/* Name: Robert Newton
+ * Date:01-22-2017
  * Solution description:
  */
  
@@ -19,14 +19,29 @@ char toLowerCase(char ch){
 
 void sticky(char* word){
      /*Convert to sticky caps*/
+
+     for (int i =0; word[i] != '\0'; i++){
+         int isEven = i % 2 == 0 ? 1 :0;
+         if (!isEven && (word[i] >= 'A' && word[i] <= 'Z'))
+         {
+             word[i] += 32;
+         } else if (isEven && (word[i] > 'a' && word[i] <= 'z'))
+         {
+             word[i] -= 32;
+         }
+     }
 }
 
 int main(){
+    char word[30];
+    printf("Enter word (30 chars or less):\n");
     /*Read word from the keyboard using scanf*/
-    
+    scanf("%30s", word);
     /*Call sticky*/
+    sticky(word);
     
     /*Print the new word*/
-    
+    printf("%s\n", word);
+
     return 0;
 }
