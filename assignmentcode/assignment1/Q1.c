@@ -1,12 +1,12 @@
 /* CS261- Assignment 1 - Q.1*/
-/* Name:
- * Date:
- * Solution description:
+/* Name: Robert Newton
+ * Date: 01/22/2017
+ * Solution description: 
  */
  
 #include <stdio.h>
-#include<stdlib.h>
-#include<math.h>
+#include <stdlib.h>
+#include <math.h>
 
 struct student{
 	int id;
@@ -43,8 +43,7 @@ void generate(struct student* students){
 }
 
 void output(struct student* students){
-    printf("the value inside fooA is %x", *iptr);
-     /*Print the address pointed to by iptr*/
+   
        /*Output information about the ten students in the format:
               ID1 Score1
               ID2 score2
@@ -60,25 +59,51 @@ void output(struct student* students){
 
 void summary(struct student* students){
      /*Compute and print the minimum, maximum and average scores of the ten students*/
-     
+     int min = 100;
+     int max = 0;
+     float sum = 0;
+
+     for (int i = 0; i < 10; i++)
+     {
+         if (students[i].score<min) 
+         {
+             min = students[i].score;
+         }
+         if(students[i].score > max)
+         {
+             max = students[i].score;
+         }
+
+         sum += students[i].score;
+     }
+
+     printf("Maximum Score: %d\n", max);
+     printf("Minimum Score: %d\n", min);
+     printf("Average Score: %f\n", sum/10);
 }
 
 void deallocate(struct student* stud){
      /*Deallocate memory from stud*/
+     if(stud != 0)
+     {
+         free(stud);
+     }
 }
 
 int main(){
     struct student* stud = NULL;
     
     /*call allocate*/
-    summary();
+    stud = allocate();
     /*call generate*/
-    deallocate();
+    generate(stud);
     /*call output*/
-    output();
+    output(stud);
     /*call summary*/
-    summary();
+    summary(stud);
     /*call deallocate*/
-    deallocate();
+    deallocate(stud);
+
+
     return 0;
 }
