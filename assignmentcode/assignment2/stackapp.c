@@ -40,8 +40,8 @@ int isBalanced(char* s)
 	/* FIXME: You will write this function */
 	DynArr *stack;
 	stack = newDynArr(20);
-	chart next = nextChar(s);
-	while(next == '\0'	{
+	char next = nextChar(s);
+	while(next == '\0')	{
 		if (next == '(') {
 			pushDynArr(stack, ')');
 		}

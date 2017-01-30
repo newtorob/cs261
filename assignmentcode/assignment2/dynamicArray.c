@@ -197,7 +197,7 @@ void swapDynArr(DynArr *v, int i, int  j)
 {
 	/* FIXME: You will write this function */
 	if (v != 0 && v->size !=0) {
-		if (i >= 0 && j >=0 && i < size && j < v->size) {
+		if (i >= 0 && j >=0 && i < v->size && j < v->size) {
 			TYPE swap = v->data[i];
 			v->data[i] = v->data[j];
 			v->data[j] = swap;
@@ -348,7 +348,7 @@ void removeDynArr(DynArr *v, TYPE val)
 	/* FIXME: You will write this function */
 	if (v != 0 && v->size > 0) {
 		for(int i = 0;  i < v->size; i++) {
-			if (v->data[i] == val;) {
+			if (v->data[i] == val) {
 				v->data[i] = v->data[v->size - 1];
 				v->data[v->size - 1] = 0;
 				v->size--;
