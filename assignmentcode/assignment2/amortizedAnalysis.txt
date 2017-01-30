@@ -1,0 +1,13 @@
+Robert Newton
+01-29-17
+
+1. How many cost units are spent in the entire process of performing 32 consecutive push operations on an empty array which starts out at capacity 8, assuming that the array will double in capacity each time a new item is added to an already full dynamic array? As N (ie. the number of pushes) grows large, under this strategy for resizing, what is the big-oh complexity for a push? 
+- The cost units to do 32 pushes consecutively onto an empty array that begins with a capacity of 8 and doubles when that size is reached at 56. The costs are calculated as: 8+9+7+17+15 = 56. The big oh complexity that results is of n (0(n)).
+
+2. How many cost units are spent in the entire process of performing 32 consecutive push operations on an empty array which starts out at capacity 8, assuming that the array will grow by a constant 2 spaces each time a new item is added to an already full dynamic array? As N (ie. the number of pushes) grows large, under this strategy for resizing, what is the big-oh complexity for a push?
+- The cost units to do 32 pushes consecutively onto an empty array starting at capacity 8 and increases by 2 each time an item is added to a full array is 260 units. The big-oh for a push in would be 0(n).
+
+
+3. Suppose that a dynamic array stack doubles its capacity when it is full, and shrinks (on Pop only) its capacity by
+half when the array is half full or less. Can you devise a sequence of N push() and pop() operations which will result in poor performance (O(N^2) total cost)? How might you adjust the array's shrinking policy to avoid this? (Hint: You may assume that the initial capacity of the array is N/2.)
+- The best way to arrive at poor performance would be to push until you reach capacity so the array doubles. You then pop a value from the stack which triggers the shring because the pop will cause the size to drop below half of the new capacity. To prevent this, the array's shrinking mechanism needs to be altered to shrink to half the size when the array is only a quarter or less full.
