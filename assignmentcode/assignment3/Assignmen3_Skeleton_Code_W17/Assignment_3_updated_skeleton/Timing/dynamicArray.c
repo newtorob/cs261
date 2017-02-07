@@ -1,3 +1,6 @@
+//Robert Newton
+//02-05-2017
+
 /*	dynamicArray.c: Dynamic Array implementation. */
 #include <assert.h>
 #include <stdlib.h>
@@ -92,6 +95,8 @@ void deleteDynArr(DynArr *v)
 void _dynArrSetCapacity(DynArr *v, int newCap)
 {	
 	/* FIXME: You will write this function */
+	v->data = realloc(v->data, newCap * sizeof(TYPE));
+	v->capacity = newCap;
 	
 }
 
@@ -119,6 +124,15 @@ int sizeDynArr(DynArr *v)
 void addDynArr(DynArr *v, TYPE val)
 {
 	/* FIXME: You will write this function */
+	if (v->data != 0) {
+		v->size = v->size + 1;
+		if (v->size >= v->capacity) {
+			int newCap = v->capacity * 2;
+                	_dynArrSetCapacity(v, newCap);
+		}
+		int index = v->size - 1;
+		v->data[index] = val;
+	}
 
 }
 
@@ -136,9 +150,12 @@ void addDynArr(DynArr *v, TYPE val)
 TYPE getDynArr(DynArr *v, int pos)
 {
 	/* FIXME: You will write this function */
-
-	/* FIXME: you must change this return value */
-	return 1; 
+	TYPE res = 0;
+	if (v != 0 && v->size > 0 && pos < v->size && pos >= 0) {
+		res = v->data[pos];
+	}		
+	return res; 
+	
 }
 
 /*	Put an item into the dynamic array at the specified location,
@@ -155,6 +172,11 @@ TYPE getDynArr(DynArr *v, int pos)
 void putDynArr(DynArr *v, int pos, TYPE val)
 {
 	/* FIXME: You will write this function */
+	if (v != 0 && v->size != 0) {
+		if (pos >= 0 && pos < v->size) {
+			v->data[pos] = val;
+		}
+	}
 }
 
 /*	Swap two specified elements in the dynamic array
@@ -169,6 +191,13 @@ void putDynArr(DynArr *v, int pos, TYPE val)
 void swapDynArr(DynArr *v, int i, int  j)
 {
 	/* FIXME: You will write this function */
+	if (v != 0 && v->size != 0) {
+		if (i >= 0 && j >= 0 && i < v->size && j < v->size) {
+			TYPE swap = v->data[i];
+			v->data[i] = v->data[j];
+			v->data[j] = swap;
+		}
+	}
 }
 
 /*	Remove the element at the specified location from the array,
@@ -185,6 +214,13 @@ void swapDynArr(DynArr *v, int i, int  j)
 void removeAtDynArr(DynArr *v, int idx)
 {
 	/* FIXME: You will write this function */
+	if (v != 0 && v->size > 0 && idx < v->size && idx >= 0) {
+		v->data[idx] = 0;
+		for (int i = idx; i < v->size; i++) {
+			v->data[i] = v->data[i + 1];
+		}
+		v->size--;
+	}
 }
 
 
@@ -204,7 +240,9 @@ void removeAtDynArr(DynArr *v, int idx)
 int isEmptyDynArr(DynArr *v)
 {
 	/* FIXME: You will write this function */
-	
+	if (v->size > 0) {
+		return 0;
+	}	
 	/* FIXME:  You will change this return value*/
 	return 1;
 }
@@ -221,6 +259,9 @@ int isEmptyDynArr(DynArr *v)
 void pushDynArr(DynArr *v, TYPE val)
 {
 	/* FIXME: You will write this function */
+	if (v != 0) {
+		addDynArr(v, val);
+	} 
 }
 
 /*	Returns the element at the top of the stack 
@@ -233,9 +274,10 @@ void pushDynArr(DynArr *v, TYPE val)
 TYPE topDynArr(DynArr *v)
 {
 	/* FIXME: You will write this function */
-	
-	/* FIXME: You will change this return value*/
-	return 1;
+	if (v != 0 && v->size > 0) {
+		return v->data[v->size - 1];
+		}
+	return 0;
 }
 
 /* Removes the element on top of the stack 
@@ -249,6 +291,10 @@ TYPE topDynArr(DynArr *v)
 void popDynArr(DynArr *v)
 {
 	/* FIXME: You will write this function */
+	if (v != 0 && v->size > 0) {
+		v->data[v->size - 1] = 0;
+		v->size--;
+	}
 }
 
 /* ************************************************************************
@@ -269,9 +315,15 @@ void popDynArr(DynArr *v)
 int containsDynArr(DynArr *v, TYPE val)
 {
 	/* FIXME: You will write this function */
-	
+	if (v != 0 && v->size > 0) {
+		for (int i = 0; i < v->size; i++) {
+			if (v->data[i] == val) {
+				return 1;
+			}
+		}
+	}
 	/* FIXME:  You will change this return value */
-	return 1;
+	return 0;
 
 }
 
@@ -288,4 +340,14 @@ int containsDynArr(DynArr *v, TYPE val)
 void removeDynArr(DynArr *v, TYPE val)
 {
 	/* FIXME: You will write this function */
+	if (v != 0 && v->size > 0) {
+		for (int i = 0; i < v->size; i++) {
+			if (v->data[i] == val) {
+				v->data[i] = v->data[v->size - 1];
+				v->data[v->size - 1] = 0;
+				v->size--;
+				break;
+			}
+		}
+}
 }
