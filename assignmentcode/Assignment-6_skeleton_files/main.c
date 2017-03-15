@@ -71,8 +71,34 @@ int main(int argc, const char** argv)
     // --- Concordance code begins here ---
     // Be sure to free the word after you are done with it here.
     // --- Concordance code ends here ---
-    
+
+    FILE *file = fopen(fileName, "r");
+
+    char* word = nextWord(file);
+
+    while (word != NULL) {
+        hashMapPut(map, word, 1);
+        free(word);
+        word = nextWord(file);
+    }
+ 
+    int hashMapCap = hashMapCapacity(map);
+
+    // Invoking concordance print method
+    for (int i = 0; i < hashMapCap; i++) {
+       HashLink* cur = map->table[i];
+       if (cur != NULL) {
+          while (cur) {
+             printf("%s: %d\n", cur->key, cur->value);
+             cur = cur->next;
+          }
+       }
+    }
+   
+    // Invoking provided print method
     hashMapPrint(map);
+
+    fclose(file);
     
     timer = clock() - timer;
     printf("\nRan in %f seconds\n", (float)timer / (float)CLOCKS_PER_SEC);

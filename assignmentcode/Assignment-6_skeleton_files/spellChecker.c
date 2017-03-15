@@ -54,6 +54,15 @@ char* nextWord(FILE* file)
 void loadDictionary(FILE* file, HashMap* map)
 {
     // FIXME: implement
+    char* word = nextWord(file);
+   
+    while (word) {
+       hashMapPut(map, word, 1);
+       free(word);
+       word = nextWord(file);
+    }
+
+    free(word);
 }
 
 /**
@@ -68,29 +77,66 @@ int main(int argc, const char** argv)
 {
     // FIXME: implement
     HashMap* map = hashMapNew(1000);
-    
+   
+    printf("Opening dictionary.txt\n"); 
     FILE* file = fopen("dictionary.txt", "r");
     clock_t timer = clock();
     loadDictionary(file, map);
+    hashMapPrint(map);
     timer = clock() - timer;
     printf("Dictionary loaded in %f seconds\n", (float)timer / (float)CLOCKS_PER_SEC);
     fclose(file);
     
     char inputBuffer[256];
+    char wordAddAnswer[50];
     int quit = 0;
+    int wordAddBool = 0;
     while (!quit)
-    {
-        printf("Enter a word or \"quit\" to quit: ");
+    {   
+
+        printf("Enter a word or \"/quit\" to quit: ");
         scanf("%s", inputBuffer);
-        
+
         // Implement the spell checker code here..
-        
-        if (strcmp(inputBuffer, "quit") == 0)
-        {
-            quit = 1;
+        if (hashMapContainsKey(map, inputBuffer)) {
+           int idx = HASH_FUNCTION(inputBuffer) % hashMapCapacity(map);
+           HashLink* cur = map->table[idx];
+           printf("Possible matches:\n");
+
+           while (cur) {
+              // Filtering returned links to only print keys of links that have
+              // keys that begin with the same leading letter
+              
+              //if (cur->key[0] == inputBuffer[0]) {
+                 printf("%s\n", cur->key);
+              //}
+              cur = cur->next;
+           }
+
+        } else if (strcmp(inputBuffer, "/quit") == 0) {
+           quit = 1;
+        } else {
+           printf("Word not found in dictionary!\n");
+
+           wordAddBool = 1;           
+
+           while (wordAddBool) {
+              printf("Would you like to add your word to the dictionary? y/n: ");
+              scanf("%s", wordAddAnswer);
+              wordAddBool = 0;
+              if (strcmp(wordAddAnswer, "y") == 0) {
+                 hashMapPut(map, inputBuffer, 1);
+                 printf("Word added to dictionary!\n");
+              } else if (strcmp(wordAddAnswer, "n") == 0) {
+                 printf("Word ignored!\n");
+              } else {
+                 wordAddBool = 1;
+              }
+           }
         }
     }
-    
+
+    // Cleaned up the hashMap dictionary from the heap
     hashMapDelete(map);
     return 0;
 }
